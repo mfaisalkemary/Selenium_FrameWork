@@ -29,9 +29,14 @@ public static void set_Excel_Sheet(String FilePath,String Sheet_Name) throws IOE
 	
 	/*this method is to return cell data from the excel sheet based on the 
 	provided column , row numbers */ 
+<<<<<<< HEAD
 	public static  Object get_Cell_Data (int col_num,int row_num){
 		XSSFCell Cell1 = Sheet.getRow(row_num).getCell(col_num);
 		return Cell1;
+=======
+	public  Object Get_Data (int col_num,int row_num){
+		return "cocowawa";
+>>>>>>> branch 'master' of https://github.com/mfaisalkemary/Selenium_FrameWork.git
 	}
 	
 	/*this method is to write data to an excel sheet based on the provided 
@@ -50,7 +55,7 @@ public static void set_Excel_Sheet(String FilePath,String Sheet_Name) throws IOE
 	 * this set of data or not to use) 
 	
 	public  String[] Control(int row_num,int col_num,boolean control){
-		
+		return null;
 	}
 	*/
 	
