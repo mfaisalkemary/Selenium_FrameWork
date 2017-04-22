@@ -18,9 +18,11 @@ public class Excel_Sheet {
  static XSSFCell Cell;
 static FileInputStream In;
 static FileOutputStream Out;
+static String FilePath;
 
-public static void set_Excel_Sheet(String FilePath,String Sheet_Name) throws IOException{
-	In = new FileInputStream(FilePath);
+public static void set_Excel_Sheet(String FilePath1,String Sheet_Name) throws IOException{
+	
+	In = new FileInputStream(FilePath1);
 	Wbook= new XSSFWorkbook(In);
 	Sheet = Wbook.getSheet(Sheet_Name);
 }
@@ -36,7 +38,8 @@ public static void set_Excel_Sheet(String FilePath,String Sheet_Name) throws IOE
 	
 	/*this method is to write data to an excel sheet based on the provided 
 	 * column , row numbers*/
-	public static void Set_Cell_Data(int col_num,int row_num,String Data) throws IOException{
+	public static void Set_Cell_Data(int col_num,int row_num,String Data , String path) throws IOException{
+		Out = new FileOutputStream(path);
 		XSSFCell Cell = Sheet.getRow(row_num).getCell(col_num);
 		Cell.setCellValue(Data);
 		Wbook.write(Out);
@@ -56,8 +59,8 @@ public static void set_Excel_Sheet(String FilePath,String Sheet_Name) throws IOE
 	
 	// this method is to test the written code
 	public static void main(String[]args) throws IOException{
-		set_Excel_Sheet("C:\\Data_Test\\Excel_test_2.xlsx", "Sheet1");
-		Set_Cell_Data(1,1,"Data Test");
+		set_Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx", "Sheet1");
+		Set_Cell_Data(1,1,"Data Test15","C:\\Data_Test\\Excel_test.xlsx");
 		String Data = get_Cell_Data(1,1).toString();
 		System.out.println(Data);
 		
