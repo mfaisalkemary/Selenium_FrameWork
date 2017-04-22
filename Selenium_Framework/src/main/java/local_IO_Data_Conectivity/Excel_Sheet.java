@@ -15,7 +15,7 @@ public class Excel_Sheet {
  static XSSFWorkbook Wbook;
  static XSSFSheet Sheet;
  XSSFRow Row;
- static XSSFCell Cell;
+static XSSFCell Cell;
 static FileInputStream In;
 static FileOutputStream Out;
 static String FilePath;
@@ -53,9 +53,23 @@ public static void set_Excel_Sheet(String FilePath1,String Sheet_Name) throws IO
 	 * this set of data or not to use) 
 	
 	public  String[] Control(int row_num,int col_num,boolean control){
+		XSSFRow Row =Sheet.getRow(row_num);
+		XSSFCell Cell = Row.getCell(col_num);
+		int x = Sheet.getFirstRowNum();
+		int y = Sheet.getLastRowNum();
+		String [] [] Data;
+		for (int i=0;i<y;i++){
+			if (Cell.getBooleanCellValue()==control){
+				
+			}
+		}
 		
-	}
-	*/
+	
+			
+		}
+			*/
+	
+	
 	
 	// this method is to test the written code
 	public static void main(String[]args) throws IOException{
