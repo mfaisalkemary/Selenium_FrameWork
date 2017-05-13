@@ -18,17 +18,88 @@ public class Excel_Sheet {
 static XSSFCell Cell;
 static FileInputStream In;
 static FileOutputStream Out;
-static String FilePath;
+public static String FilePath;
 
+/*
 public static void set_Excel_Sheet(String FilePath1,String Sheet_Name) throws IOException{
 	
 	In = new FileInputStream(FilePath1);
 	Wbook= new XSSFWorkbook(In);
 	Sheet = Wbook.getSheet(Sheet_Name);
 }
- 
+*/
 
+public Excel_Sheet (String FilePath) throws IOException{
+	this.FilePath = FilePath;
+	this.In= new FileInputStream(FilePath);
+	this.Wbook = new XSSFWorkbook(In);
+	In.close();
+}
+ 
+//this method is to retrieve the number of rows within a sheet 
+	public int retrieveNumberOfRows(String SheetName){
+		int index = Wbook.getSheetIndex(SheetName);
+		if (index == -1){
+			return 0;
+		}
+		
+		Sheet = Wbook.getSheetAt(index);
+		int RowNum = Sheet.getLastRowNum();
+		return RowNum+1;
+	}
 	
+
+	//this method is to retrieve the number of column within a sheet 
+	
+    public int retrieveNumberOfColumns(String SheetName){
+		int Index = Wbook.getSheetIndex(SheetName);
+		if (Index==-1){
+			return 0;
+		}
+		
+		Sheet=Wbook.getSheetAt(Index);
+		Row=Sheet.getRow(0);
+		int ColuNum = Row.getLastCellNum();
+		return ColuNum;
+	}
+    
+	//this method is to retrieve the Run flag for either suite or test cases within the suite 
+	public String retriveToRunFlag(String SheetName,String ColName,String RowName){
+		int Index = Wbook.getSheetIndex(SheetName);
+		if (Index == -1){
+			return null;
+		}
+	
+	int Rows = retrieveNumberOfRows(SheetName);
+	int Cols= retrieveNumberOfColumns(SheetName);
+	int ColIndex = -1;
+	int RowIndex=-1;
+	
+	 Sheet=Wbook.getSheetAt(Index);
+	XSSFRow Row1=Sheet.getRow(0);
+	
+	
+	for (int i =0 ; i<Cols ; i++){
+			if (Row1.getCell(i).getStringCellValue().equals(ColName.trim())){
+				ColIndex=i;			
+			}
+			
+	}
+	
+	for (int j = 0;j<Rows;j++){
+		if (Sheet.getRow(j).getCell(0).getStringCellValue().equals(RowName)){
+			RowIndex=j;
+		}
+	}
+	
+	return Sheet.getRow(RowIndex).getCell(ColIndex).toString();
+	
+	}
+	
+  // this method is to get the data row of a certain test case which is having a to-run flag = 1 
+	
+    
+    
 	/*this method is to return cell data from the excel sheet based on the 
 	provided column , row numbers */ 
 	public static  Object get_Cell_Data (int col_num,int row_num){
@@ -45,8 +116,12 @@ public static void set_Excel_Sheet(String FilePath1,String Sheet_Name) throws IO
 		Wbook.write(Out);
 		Out.flush();
 		Out.close();
-		
 	}
+	
+	
+	
+	
+	
 	
 	/*this method is to return a row from the excel sheet based on the 
 	 * value of a cell in a certain column in the sheet (a flag column to use 
@@ -73,10 +148,17 @@ public static void set_Excel_Sheet(String FilePath1,String Sheet_Name) throws IO
 	
 	// this method is to test the written code
 	public static void main(String[]args) throws IOException{
-		set_Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx", "Sheet1");
-		Set_Cell_Data(1,1,"Data Test15","C:\\Data_Test\\Excel_test.xlsx");
-		String Data = get_Cell_Data(1,1).toString();
-		System.out.println(Data);
+/*set_Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx", "Sheet1");
+Set_Cell_Data(1,1,"Data Test120","C:\\Data_Test\\Excel_test.xlsx");
+String Data = get_Cell_Data(1,1).toString();
+System.out.println(Data);
+*/
+		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx");
+		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
+		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
+		String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "Test 8");
+		System.out.println(Rows+" , "+Cols +" , "+Data);
+		//System.out.println(Rows+" , "+Cols);
 		
 	}
 }
