@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import org.apache.bcel.generic.RETURN;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -73,7 +74,7 @@ public Excel_Sheet (String FilePath) throws IOException{
 	int Rows = retrieveNumberOfRows(SheetName);
 	int Cols= retrieveNumberOfColumns(SheetName);
 	int ColIndex = -1;
-	int RowIndex=-1;
+	int RowIndex= -1;
 	
 	 Sheet=Wbook.getSheetAt(Index);
 	XSSFRow Row1=Sheet.getRow(0);
@@ -95,6 +96,55 @@ public Excel_Sheet (String FilePath) throws IOException{
 	return Sheet.getRow(RowIndex).getCell(ColIndex).toString();
 	
 	}
+	
+	
+	
+	
+	
+	// This Method is to retrieve the test data from the test cases & their data sheet
+	public String [] retrievTestData(String SheetName,String ColumnName){
+		int Index =Wbook.getSheetIndex(SheetName);
+		if (Index ==-1){
+			return null;
+		}
+	
+		int Cols= retrieveNumberOfColumns(SheetName);
+		int Rows= retrieveNumberOfRows(SheetName);
+		int ColLocation =-1;
+		
+		XSSFRow Row = Wbook.getSheetAt(Index).getRow(0);
+		for (int i = 0 ; i<Cols-1;i++){
+			if (Row.getCell(i).getStringCellValue().equals(ColumnName)){
+				ColLocation = i;
+			}
+		}
+		if (ColLocation == -1){
+			return null;
+		}
+		
+		String [] Data  = new String [Rows-1]; 
+		for (int j=0;j<Rows-1;j++){
+			XSSFRow DataRow = Wbook.getSheetAt(Index).getRow(j+1);
+			if (DataRow == null){
+				Data[j]="  ";
+			}
+			
+			else{
+				XSSFCell DataCell=DataRow.getCell(ColLocation);
+				if (DataCell == null){
+					Data[j]=" ";
+				}
+				else{
+					Data [j]=DataRow.getCell(ColLocation).toString();
+				}
+			    }
+			}
+		return Data;
+		}
+		
+		
+	
+	
 	
   // this method is to get the data row of a certain test case which is having a to-run flag = 1 
 	
@@ -156,9 +206,10 @@ System.out.println(Data);
 		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx");
 		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
 		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
-		String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "Test 8");
-		System.out.println(Rows+" , "+Cols +" , "+Data);
-		//System.out.println(Rows+" , "+Cols);
+		String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "Test 9");
+		String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
+		//System.out.println(Rows+" , "+Cols +" , "+Data);
+		System.out.println(Arrays.toString(TestData));
 		
 	}
 }
