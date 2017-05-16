@@ -170,8 +170,48 @@ public Excel_Sheet (String FilePath) throws IOException{
 	
 	
 	
-	
-	
+	/*
+	 * this method is to retrieve the test data for all the test cases 
+	 */
+	public String [][] retreiveTestData(String SheetName){
+
+		int index = Wbook.getSheetIndex(Sheet);
+		if (index == -1){
+			return null;
+		}
+		
+		XSSFSheet Sheet = Wbook.getSheetAt(index);
+		
+		int Colnum = retrieveNumberOfColumns(SheetName);
+		int Rownum = retrieveNumberOfRows(SheetName);
+		String  [][] Data=new String [Rownum-1][Colnum];
+		for (int i = 0 ; i<Rownum-1;i++){
+			XSSFRow Row = Sheet.getRow(i+1);
+			for (int j= 0 ; j<Colnum; j++ ){
+				if (Row == null){
+					Data [i][j]= " ";
+				}
+				
+				else {
+					XSSFCell Cell= Row.getCell(j);
+					if (Cell == null){
+						Data [i][j] = " ";
+					}
+				
+				else {
+					Data [i][j]=Cell.toString();
+				}
+				
+					
+				}
+				
+			
+				}
+			
+		}
+		return  Data;
+
+	}
 	
 	/*this method is to return a row from the excel sheet based on the 
 	 * value of a cell in a certain column in the sheet (a flag column to use 
@@ -207,9 +247,11 @@ System.out.println(Data);
 		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
 		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
 		String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "Test 9");
-		String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
-		//System.out.println(Rows+" , "+Cols +" , "+Data);
-		System.out.println(Arrays.toString(TestData));
+		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
+		String [][]AllTestData = Sheet.retreiveTestData("Sheet1");
+		//System.out.println(Rows+" , "+Cols);
+		//System.out.println(Arrays.toString(TestData));
+		System.out.println(Arrays.deepToString(AllTestData));
 		
 	}
 }
