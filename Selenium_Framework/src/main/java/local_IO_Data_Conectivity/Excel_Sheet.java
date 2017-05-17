@@ -34,6 +34,7 @@ public Excel_Sheet (String FilePath) throws IOException{
 	this.FilePath = FilePath;
 	this.In= new FileInputStream(FilePath);
 	this.Wbook = new XSSFWorkbook(In);
+	this.Out= new FileOutputStream(FilePath);
 	In.close();
 }
  
@@ -213,26 +214,59 @@ public Excel_Sheet (String FilePath) throws IOException{
 
 	}
 	
-	/*this method is to return a row from the excel sheet based on the 
-	 * value of a cell in a certain column in the sheet (a flag column to use 
-	 * this set of data or not to use) 
-	
-	public  String[] Control(int row_num,int col_num,boolean control){
-		XSSFRow Row =Sheet.getRow(row_num);
-		XSSFCell Cell = Row.getCell(col_num);
-		int x = Sheet.getFirstRowNum();
-		int y = Sheet.getLastRowNum();
-		String [] [] Data;
-		for (int i=0;i<y;i++){
-			if (Cell.getBooleanCellValue()==control){
+	/*
+	 * this method is to write test results to test data and test case sheet 
+	 */
+	public boolean writeTestData(String SheetName,String ColName,int Rownum,String Result){
+		int index = Wbook.getSheetIndex(SheetName);
+		if (index == -1){
+			System.out.println("Wrong Sheet Name");
+			return false;		
+		}
+		else {
+			try{
 				
+			XSSFSheet Sheet = Wbook.getSheetAt(index);
+			XSSFRow Row = Sheet.getRow(0);
+			int Cols = retrieveNumberOfColumns(SheetName);
+			int Rows = retrieveNumberOfRows(SheetName);
+			int Colloc =-1;
+			for (int i=0 ; i<Cols;i++){
+				if (Row.getCell(i).toString().equals(ColName.trim()))
+				Colloc = i;
 			}
-		}
-		
-	
 			
-		}
-			*/
+			System.out.println("getting cells");
+			
+			if (Colloc == -1){
+				System.out.println("Wrong Col Name");
+				return false;
+			}
+			
+			XSSFRow ReqRow = Sheet.getRow(Rownum);
+			XSSFCell ReqCell = ReqRow.getCell(Colloc);
+			if (ReqCell == null){
+				ReqCell = ReqRow.createCell(Colloc);
+			}
+				ReqCell.setCellValue(Result);
+				
+				System.out.println("writing data");
+				Wbook.write(Out);
+				Out.flush();
+				Out.close();
+			
+			
+			
+			}
+			catch (Exception E){
+				E.printStackTrace();
+				return false;
+			}
+			return true;
+		     }
+	}
+	
+	
 	
 	
 	
@@ -244,14 +278,15 @@ String Data = get_Cell_Data(1,1).toString();
 System.out.println(Data);
 */
 		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx");
-		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
-		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
-		String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "Test 9");
+		//int Rows = Sheet.retrieveNumberOfRows("Sheet1");
+		//int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
+		//String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "9");
 		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
-		String [][]AllTestData = Sheet.retreiveTestData("Sheet1");
+		//String [][]AllTestData = Sheet.retreiveTestData("Sheet1");
+		Sheet.writeTestData("Sheet1","Letter",6, "writing data");
 		//System.out.println(Rows+" , "+Cols);
 		//System.out.println(Arrays.toString(TestData));
-		System.out.println(Arrays.deepToString(AllTestData));
+	//	System.out.println(Arrays.deepToString(AllTestData));
 		
 	}
 }
