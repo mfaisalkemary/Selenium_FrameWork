@@ -34,7 +34,7 @@ public Excel_Sheet (String FilePath) throws IOException{
 	this.FilePath = FilePath;
 	this.In= new FileInputStream(FilePath);
 	this.Wbook = new XSSFWorkbook(In);
-	this.Out= new FileOutputStream(FilePath);
+	//this.Out= new FileOutputStream(FilePath);
 	In.close();
 }
  
@@ -267,6 +267,73 @@ public Excel_Sheet (String FilePath) throws IOException{
 	}
 	
 	
+	/*
+	 * this method is to write test results to test suites sheet 
+	 */
+	
+	public boolean writeResults(String SheetName1,String ColName,String RowName ,String Result) throws IOException{
+    int index = Wbook.getSheetIndex(SheetName1);
+if (index == -1){
+System.out.println("Wrong Sheet Name");
+return false;
+}
+else{
+	XSSFSheet Sheet = Wbook.getSheetAt(index);
+	XSSFRow Row = Sheet.getRow(0);
+	int ColNum= retrieveNumberOfColumns(SheetName1);
+	int RowNum = retrieveNumberOfRows(SheetName1);
+	
+	int ReqCol=-1;
+	int ReqRow=-1;
+	System.out.println("entering the loop");
+	
+	for (int i = 0;i<ColNum;i++){
+		if (Row.getCell(i).toString().equals(ColName)){
+			ReqCol=i;
+			System.out.println("got the col number");
+		}
+
+		System.out.println("out of comaprison in  the loop");
+	}
+	if (ReqCol ==-1){
+		System.out.println("Wrong Column Name");
+		return false;
+	}
+	for (int j = 1;j<RowNum;j++){
+		XSSFRow Row1=Sheet.getRow(j);
+		if (Row1.getCell(0).toString().equals(RowName)){
+			ReqRow=j;
+		}
+		System.out.println("got the row number");
+	}
+	if (ReqRow ==-1){
+		System.out.println("Wrong Test Suite  Name");
+		return false;
+	}
+	
+	XSSFCell ReqCell= Sheet.getRow(ReqRow).getCell(ReqCol);
+			ReqCell.setCellValue(Result);
+			
+	FileOutputStream out1=new FileOutputStream(FilePath);
+     Wbook.write(out1);
+     out1.flush();
+     out1.close();
+
+	return true;
+	
+}
+	
+
+
+
+
+
+	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -278,13 +345,14 @@ String Data = get_Cell_Data(1,1).toString();
 System.out.println(Data);
 */
 		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx");
-		//int Rows = Sheet.retrieveNumberOfRows("Sheet1");
-		//int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
+		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
+		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
 		//String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "9");
 		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
 		//String [][]AllTestData = Sheet.retreiveTestData("Sheet1");
-		Sheet.writeTestData("Sheet1","Letter",6, "writing data");
-		//System.out.println(Rows+" , "+Cols);
+		//Sheet.writeTestData("Sheet1","Letter",6, "writing data");
+		Sheet.writeResults("Sheet1", "Letter", "Emp7", "test suite data");
+		System.out.println(Rows+" , "+Cols);
 		//System.out.println(Arrays.toString(TestData));
 	//	System.out.println(Arrays.deepToString(AllTestData));
 		
