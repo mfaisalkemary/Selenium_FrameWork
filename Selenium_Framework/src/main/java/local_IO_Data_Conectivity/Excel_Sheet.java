@@ -146,9 +146,6 @@ public Excel_Sheet (String FilePath) throws IOException{
 		
 	
 	
-	
-  // this method is to get the data row of a certain test case which is having a to-run flag = 1 
-	
     
     
 	/*this method is to return cell data from the excel sheet based on the 
@@ -169,10 +166,45 @@ public Excel_Sheet (String FilePath) throws IOException{
 		Out.close();
 	}
 	
-	
+	/*
+	 * this method is to retrieve the number of data rows will be used for a certain test case
+	 */
+	public  int retrieveTestCaseNumberOfDataRows (String SheetName,String PartialCaseName){
+		int Index = Wbook.getSheetIndex(SheetName);
+		if (Index == -1){
+     System.out.println("Wrong Sheet Name");
+			return 0;
+		}
+		else{
+			XSSFSheet ReqSheet = Wbook.getSheetAt(Index);
+			XSSFRow Row = null;
+			XSSFCell Cell = null;
+			int ReqRowNum=0;
+			int RowNum= retrieveNumberOfRows(SheetName);
+			for(int I=1;I<RowNum-1;I++){
+				Row = ReqSheet.getRow(I);
+				Cell=Row.getCell(1);
+				if (Cell.toString().contains(PartialCaseName)){
+					
+					ReqRowNum +=I;
+					
+					System.out.println("Looping"+I+" "+ReqRowNum);
+					continue;
+				}	
+				
+				}
+			if (ReqRowNum == 0){
+				System.out.println("Wrong Test Case Name");
+				return 0;
+			}
+			
+			return ReqRowNum;
+		}
+		
+	}
 	
 	/*
-	 * this method is to retrieve the test data for all the test cases 
+	 * this method is to retrieve multiple rows of test data to a certain test case
 	 */
 	public String [][] retreiveTestData(String SheetName){
 
@@ -347,15 +379,16 @@ System.out.println(Data);
 		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx");
 		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
 		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
+		int ReqRows=Sheet.retrieveTestCaseNumberOfDataRows("Sheet1","mohamed");
 		//String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "9");
 		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
 		//String [][]AllTestData = Sheet.retreiveTestData("Sheet1");
 		//Sheet.writeTestData("Sheet1","Letter",6, "writing data");
-		Sheet.writeResults("Sheet1", "Letter", "Emp7", "test suite data");
-		System.out.println(Rows+" , "+Cols);
+		//Sheet.writeResults("Sheet1", "Letter", "Emp7", "test suite data");
+		//System.out.println(Rows+" , "+Cols);
 		//System.out.println(Arrays.toString(TestData));
-	//	System.out.println(Arrays.deepToString(AllTestData));
-		
+	   //System.out.println(Arrays.deepToString(AllTestData));
+		System.out.println(ReqRows);
 	}
 }
 
