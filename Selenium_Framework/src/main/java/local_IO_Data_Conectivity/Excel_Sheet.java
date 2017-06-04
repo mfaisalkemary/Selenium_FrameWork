@@ -181,15 +181,12 @@ public Excel_Sheet (String FilePath) throws IOException{
 			XSSFCell Cell = null;
 			int ReqRowNum=0;
 			int RowNum= retrieveNumberOfRows(SheetName);
-			for(int I=1;I<RowNum-1;I++){
+			for(int I=1;I<RowNum;I++){
 				Row = ReqSheet.getRow(I);
 				Cell=Row.getCell(1);
 				if (Cell.toString().contains(PartialCaseName)){
+					ReqRowNum++;
 					
-					ReqRowNum +=I;
-					
-					System.out.println("Looping"+I+" "+ReqRowNum);
-					continue;
 				}	
 				
 				}
@@ -202,6 +199,20 @@ public Excel_Sheet (String FilePath) throws IOException{
 		}
 		
 	}
+	
+	/*
+	 * this method is to return row numbers of test data related to a certain test case  
+	 * based on :
+	 *  1-Number of data columns to be retrieved from the data sheet
+	 *  2-certain string pattern in the test case name 
+	 */
+	
+	public String [][]  retrieveRowNumbers(String SheetName,String TestCaseColName,int DataCols,String pattern){
+		
+	}
+	
+	
+	
 	
 	/*
 	 * this method is to retrieve multiple rows of test data to a certain test case
