@@ -206,7 +206,7 @@ public Excel_Sheet (String FilePath) throws IOException{
 	 *  1-Number of data columns to be retrieved from the data sheet
 	 *  2-certain string pattern in the test case name 
 	 */
-	
+	/*
 	public String [][]  retrieveRowNumbers(String SheetName,String TestCaseColName,int DataCols,String pattern){
 		int Index = Wbook.getSheetIndex(SheetName);
 		if (Index == -1){
@@ -240,7 +240,7 @@ public Excel_Sheet (String FilePath) throws IOException{
 			}
 			
 			
-			String [][] Data= new String [RowNum][DataCols];
+			
 			
 		         }
 		

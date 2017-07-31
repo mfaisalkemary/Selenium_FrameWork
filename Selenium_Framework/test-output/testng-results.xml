@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="21900" started-at="2017-07-31T13:03:36Z" finished-at="2017-07-31T13:03:58Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="21900" started-at="2017-07-31T13:03:36Z" finished-at="2017-07-31T13:03:58Z">
+      <class name="tests_To_Be_Executed.Tests">
+        <test-method status="PASS" signature="startup()[pri:0, instance:tests_To_Be_Executed.Tests@10bdf5e5]" name="startup" is-config="true" duration-ms="10139" started-at="2017-07-31T16:03:36Z" finished-at="2017-07-31T16:03:47Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startup -->
+        <test-method status="PASS" signature="addition()[pri:0, instance:tests_To_Be_Executed.Tests@10bdf5e5]" name="addition" duration-ms="11293" started-at="2017-07-31T16:03:47Z" finished-at="2017-07-31T16:03:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addition -->
+        <test-method status="PASS" signature="end()[pri:0, instance:tests_To_Be_Executed.Tests@10bdf5e5]" name="end" is-config="true" duration-ms="449" started-at="2017-07-31T16:03:58Z" finished-at="2017-07-31T16:03:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- end -->
+      </class> <!-- tests_To_Be_Executed.Tests -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
