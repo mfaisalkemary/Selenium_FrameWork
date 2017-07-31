@@ -208,8 +208,43 @@ public Excel_Sheet (String FilePath) throws IOException{
 	 */
 	
 	public String [][]  retrieveRowNumbers(String SheetName,String TestCaseColName,int DataCols,String pattern){
+		int Index = Wbook.getSheetIndex(SheetName);
+		if (Index == -1){
+			System.out.println("Wrong Sheet Name");
+			return null;
+	   		}
+		    else {
+			XSSFSheet Sheet = Wbook.getSheetAt(Index);
+			XSSFRow Row= Sheet.getRow(0);
+			int testcasecolloc = -1;
+			for (int i =0;i<Row.getLastCellNum();i++){
+				if (Row.getCell(i).toString().equals(TestCaseColName)){
+					testcasecolloc = i;
+				}
+				if (testcasecolloc ==-1){
+					System.out.println("Wrong Test Case Column Name");
+					return null;
+				}
+				else {
+					
+					int rowcount = retrieveNumberOfRows(SheetName);
+					int RowNum = retrieveTestCaseNumberOfDataRows(SheetName,pattern);
+					XSSFRow []Rows=new XSSFRow [RowNum];
+					for (int j=1;j<rowcount;i++){
+                    XSSFRow ReqRows=Sheet.getRow(j);
+                    if (ReqRows.getCell(testcasecolloc).toString().contains(pattern)){
+                    	
+                    }
+					}
+				}
+			}
+			
+			
+			String [][] Data= new String [RowNum][DataCols];
+			
+		         }
 		
-	}
+	         }
 	
 	
 	
