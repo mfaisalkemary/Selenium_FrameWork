@@ -2,19 +2,18 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="suite" parallel="tests">
 
-<test name="Chrome">
-<parameter name="Browser" value="Selenium_Framework.tests_To_Be_Executed.Tests.browertype"></parameter>
+<test name="chrome">
+<parameter name="Browser" value= "chrome"></parameter>
 <classes>
-<class name="Selenium_Framework.Tests"></class>
+<class name="tests_To_Be_Executed.Tests"></class>
 </classes>
-
 </test>
 
-
-
-
-
-
-
+<test name="firefox">
+<parameter name="Browser" value= "firefox"></parameter>
+<classes>
+<class name="tests_To_Be_Executed.Tests"></class>
+</classes>
+</test>
 
 </suite>

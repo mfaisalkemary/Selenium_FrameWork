@@ -1,0 +1,8 @@
+cd C:\Selenium_Grid 
+
+start java -Dwebdriver.chrome.driver=C:\Selenium_Grid\Chrome\chromedriver -jar C:\Selenium_Grid\selenium-server-standalone-3.0.1.jar  -role webdriver -hub  http://localhost:4444/grid/register -browser browserName=chrome,platform=WIN7 -port 5557
+
+
+cd C:\Selenium_Grid 
+
+java -Dwebdriver.chrome.driver=/home/seluser -jar /home/seluser/selenium-server-standalone.jar  -role webdriver -hub  http://127.17.0.2:4444/grid/register -browser browserName=chrome,platform=linux -port 4445

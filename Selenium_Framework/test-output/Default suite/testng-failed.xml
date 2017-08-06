@@ -5,7 +5,6 @@
     <classes>
       <class name="tests_To_Be_Executed.Tests">
         <methods>
-          <include name="startup"/>
           <include name="addition"/>
         </methods>
       </class> <!-- tests_To_Be_Executed.Tests -->

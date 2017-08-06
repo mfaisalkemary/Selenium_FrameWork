@@ -1,0 +1,7 @@
+java -jar C:\Selenium Grid\selenium-server-standalone-3.0.1.jar -role node -hub http://localhost:4444/grid/register -browser browserName=firefox -port 5555
+
+Where,
+C:\Selenium Grid\selenium-server-standalone-3.0.1.jar = Location of the Selenium Server Standalone Jar File(on the Node Machine)
+http://10.30.217.157:4444 = IP Address of the Hub and 4444 is the port of the Hub
+browserName = firefox (Parameter to specify the Browser name on Nodes)
+5555 = Port on which Firefox Node would be up and running.

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="suite" parallel="tests">
+
+<test name="Chrome">
+<parameter name="Browser" value="chrome"></parameter>
+<classes>
+<class name="Selenium_Framework.tests_To_Be_Executed.Tests"></class>
+</classes>
+</test>
+
+
+
+
+
+
+
+
+</suite>
