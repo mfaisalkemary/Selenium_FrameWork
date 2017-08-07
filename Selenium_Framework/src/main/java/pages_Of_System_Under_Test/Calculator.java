@@ -2,16 +2,21 @@ package pages_Of_System_Under_Test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Calculator {
 public WebDriver Driver;
-
+public WebDriverWait Wait;
+public Actions actions;
 public Calculator(WebDriver driver){
 	this.Driver=driver;
 	PageFactory.initElements(driver, this);
 }
+
 
 @FindBy(id="nmr_25")
 public WebElement Number0;
@@ -63,6 +68,29 @@ public WebElement Divide;
 
 @FindBy(id="nmr_23")
 public WebElement Equal;
+
+@FindBy(css = "#u_0_0 > tbody > tr:nth-child(1) > td > table")
+public WebElement pageidentifier;
+
+
+
+public void waitforpagetoload(){
+    Wait = new WebDriverWait(Driver, 20);
+	Wait.until(ExpectedConditions.visibilityOf(pageidentifier));
+}
+
+public String addition(String num1,String num2){
+	actions = new Actions(Driver);
+	actions.moveToElement(Result).sendKeys(num1);
+	actions.moveToElement(Sumation).click();
+	actions.moveToElement(Result).sendKeys(num2);
+	actions.moveToElement(Equal).click();
+	actions.moveToElement(Result);
+	actions.build().perform();
+	return Result.getText();
+}
+
+
 
 
 }

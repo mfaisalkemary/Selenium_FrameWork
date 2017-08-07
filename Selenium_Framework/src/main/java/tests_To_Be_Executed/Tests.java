@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,9 +24,10 @@ import pages_Of_System_Under_Test.Calculator;
 
 public class Tests {
 
-	Calculator calculator;
+	
 	public WebDriver Driver;
-	WebDriverWait Wait;
+	Calculator calculator;
+	//WebDriverWait Wait;
 	public String Node; 
 	
 	@Parameters("Browser")
@@ -36,10 +38,11 @@ public class Tests {
     DesiredCapabilities DC = DesiredCapabilities.chrome();
     DC.setBrowserName("chrome");
     Driver = new RemoteWebDriver(new java.net.URL(Node),DC);
+    calculator = new Calculator(Driver);
     System.out.println("hello from chrome");
 		}
 		
-		
+		/*
     else if (Browser.equalsIgnoreCase("fireFox")){
 		   Node = "http://localhost:4446/wd/hub/";
 		    DesiredCapabilities DC = DesiredCapabilities.firefox();
@@ -47,14 +50,16 @@ public class Tests {
 		    Driver = new RemoteWebDriver(new java.net.URL(Node),DC);
 		    System.out.println("hello from firefox");
 	 }
-    
+    */
     
     //Wait.until(ExpectedConditions.visibilityOf(element))
 	}
 	
 	@Test
-	public void addition(){
+	public void addition() throws InterruptedException{
+		Driver.manage().window().maximize();
 		Driver.get("http://calculator-1.com/");
+		Assert.assertEquals(calculator.addition("1","2"), "3");
 	}
 	
 	
