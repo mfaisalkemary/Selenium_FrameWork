@@ -1,11 +1,9 @@
 package tests_To_Be_Executed;
-
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import java.net.MalformedURLException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -56,13 +54,18 @@ public class Tests {
 	}
 	
 	@Test
-	public void addition() throws InterruptedException{
+	public void Addition(){
 		Driver.manage().window().maximize();
 		Driver.get("http://calculator-1.com/");
-		Assert.assertEquals(calculator.addition("1","2"), "3");
+		Assert.assertEquals(calculator.addition(1,2), 3);
 	}
 	
-	
+	@Test
+	public void Multiply() {
+		Driver.manage().window().maximize();
+		Driver.get("http://calculator-1.com/");
+		Assert.assertEquals(calculator.multiply(11, 12), 132);
+	}
 	
 	@AfterTest
 	public void end(){

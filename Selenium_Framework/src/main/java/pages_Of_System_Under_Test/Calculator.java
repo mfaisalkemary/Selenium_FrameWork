@@ -12,6 +12,7 @@ public class Calculator {
 public WebDriver Driver;
 public WebDriverWait Wait;
 public Actions actions;
+
 public Calculator(WebDriver driver){
 	this.Driver=driver;
 	PageFactory.initElements(driver, this);
@@ -79,16 +80,31 @@ public void waitforpagetoload(){
 	Wait.until(ExpectedConditions.visibilityOf(pageidentifier));
 }
 
-public String addition(String num1,String num2){
+public int addition(int num1,int num2){
 	actions = new Actions(Driver);
-	actions.moveToElement(Result).sendKeys(num1);
+	actions.moveToElement(Result).sendKeys(Integer.toString(num1));
 	actions.moveToElement(Sumation).click();
-	actions.moveToElement(Result).sendKeys(num2);
+	actions.moveToElement(Result).sendKeys(Integer.toString(num2));
 	actions.moveToElement(Equal).click();
 	actions.moveToElement(Result);
 	actions.build().perform();
-	return Result.getText();
+	int i = Integer.parseInt(Result.getText());
+	return i;
 }
+
+
+public int multiply(int num1,int num2){
+	actions = new Actions(Driver);
+	actions.moveToElement(Result).sendKeys(Integer.toString(num1));
+	actions.moveToElement(Multiply).click();
+	actions.moveToElement(Result).sendKeys(Integer.toString(num2));
+	actions.moveToElement(Equal).click();
+	actions.moveToElement(Result);
+	actions.build().perform();
+	 int I=Integer.parseInt(Result.getText());
+	 return I;
+}
+
 
 
 

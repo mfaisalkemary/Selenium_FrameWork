@@ -293,6 +293,80 @@ public Excel_Sheet (String FilePath) throws IOException{
 	}
 	
 	/*
+	 * this method is to return test case data from a certain excel sheet 
+	 * based on the test data sheet name , Data columns names  
+	 * and the value of the (ToRun) flag
+	 */
+	
+	public String [][] retrieveTestCaseData(String SheetName,String DataColName1 , String DataColName2 , String ToRunColumnName , String ToRunColumnValue){
+	int index =Wbook.getSheetIndex(SheetName);
+	if (index==-1){
+		System.out.println("Wrong SheetName");
+		return null;
+	}
+	
+	Sheet=Wbook.getSheetAt(index);
+	int Rownum=retrieveNumberOfRows(Sheet.getSheetName());
+	int Colnum=retrieveNumberOfColumns(Sheet.getSheetName());
+	XSSFRow Row= Sheet.getRow(0);
+	int DataCol1loc=-1;
+	int DataCol2loc=-1;
+	int ToRunColloc=-1;
+	
+	
+	for (int i =0;i< Colnum ; i++){
+		if (Row.getCell(i).toString().equals(DataColName1)){
+			DataCol1loc=i;
+		}
+		if (Row.getCell(i).toString().equals(DataColName2)){
+			DataCol2loc=i;
+		}
+		
+		if (Row.getCell(i).toString().equals(ToRunColumnName)){
+			ToRunColloc=i;
+		}
+	}
+	
+	System.out.println("DataCol1loc is : "+DataCol1loc+"     "+"DataCol2loc is : "+DataCol2loc);
+	
+	System.out.println("Rownum is : "+Rownum+"     "+"Colnum is : "+Colnum);
+	
+	if (DataCol1loc== -1 || DataCol2loc == -1 ||ToRunColloc ==-1 ){
+		System.out.println("Wrong Column Names");
+		return null;
+	}
+	
+	String [][] Data = new String [Rownum-1][2];
+	
+	for (int i =0;i<Rownum-1;i++){
+		XSSFRow Row1 = Sheet.getRow(i+1);
+		for (int j =DataCol1loc;j<DataCol2loc;j++){
+        if (Row1 == null){
+			Data [i][j]= " ";
+		}
+        else
+        {
+        	 XSSFCell Cell =Row1.getCell(j);	
+        	 if (Cell == null){
+        		 Data [i][j]= " ";
+        	 }
+        
+        
+        else {
+        	 Data [i][j]=Cell.toString(); 
+        }
+        	
+		
+        }
+		
+	}
+		
+	}
+	return Data;
+	}
+	
+	
+	/*
 	 * this method is to write test results to test data and test case sheet 
 	 */
 	public boolean writeTestData(String SheetName,String ColName,int Rownum,String Result){
@@ -422,19 +496,21 @@ Set_Cell_Data(1,1,"Data Test120","C:\\Data_Test\\Excel_test.xlsx");
 String Data = get_Cell_Data(1,1).toString();
 System.out.println(Data);
 */
-		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx");
-		int Rows = Sheet.retrieveNumberOfRows("Sheet1");
-		int Cols =Sheet.retrieveNumberOfColumns("Sheet1");
-		int ReqRows=Sheet.retrieveTestCaseNumberOfDataRows("Sheet1","mohamed");
+		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\framework\\FrameWork.xlsx");
+		int Rows = Sheet.retrieveNumberOfRows("Divide");
+		int Cols =Sheet.retrieveNumberOfColumns("Divide");
+		//int ReqRows=Sheet.retrieveTestCaseNumberOfDataRows("Sheet1","mohamed");
 		//String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "9");
 		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
-		//String [][]AllTestData = Sheet.retreiveTestData("Sheet1");
+		String [][]AllTestData = Sheet.retreiveTestData("Divide");
 		//Sheet.writeTestData("Sheet1","Letter",6, "writing data");
 		//Sheet.writeResults("Sheet1", "Letter", "Emp7", "test suite data");
 		//System.out.println(Rows+" , "+Cols);
 		//System.out.println(Arrays.toString(TestData));
-	   //System.out.println(Arrays.deepToString(AllTestData));
-		System.out.println(ReqRows);
+	  // System.out.println(Arrays.deepToString(AllTestData));
+		//System.out.println(ReqRows);
+	   String Data [][] =Sheet.retrieveTestCaseData("Divide","Data 1 Column","Data 2 Column","CaseToRun","Y");
+	   System.out.println(Arrays.deepToString(Data));
 	}
 }
 
