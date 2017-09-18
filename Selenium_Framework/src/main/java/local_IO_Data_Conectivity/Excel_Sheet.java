@@ -337,23 +337,31 @@ public Excel_Sheet (String FilePath) throws IOException{
 	}
 	
 	String [][] Data = new String [Rownum-1][2];
-	
+	String ToRunFlag = null;
 	for (int i =0;i<Rownum-1;i++){
 		XSSFRow Row1 = Sheet.getRow(i+1);
-		for (int j =DataCol1loc;j<DataCol2loc;j++){
-        if (Row1 == null){
-			Data [i][j]= " ";
+		XSSFCell Cell1 = Row1.getCell(ToRunColloc);
+		if (Cell1 == null){
+			ToRunFlag =" ";
+		}
+		else
+		ToRunFlag = Cell1.getStringCellValue();
+		System.out.println("To Run Flag Value Is  "+ToRunFlag);
+		for (int j =DataCol1loc;j<DataCol2loc+1;j++){
+			//System.out.println("To Run Flag Value Is  "+ToRunFlag);
+        if (Row1 == null || !ToRunFlag.equals(ToRunColumnValue) ){
+			Data [i][j-1]= " ";
 		}
         else
         {
         	 XSSFCell Cell =Row1.getCell(j);	
         	 if (Cell == null){
-        		 Data [i][j]= " ";
+        		 Data [i][j-1]= " ";
         	 }
         
         
         else {
-        	 Data [i][j]=Cell.toString(); 
+        	 Data [i][j-1]=Cell.toString(); 
         }
         	
 		
@@ -502,15 +510,16 @@ System.out.println(Data);
 		//int ReqRows=Sheet.retrieveTestCaseNumberOfDataRows("Sheet1","mohamed");
 		//String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "9");
 		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
-		String [][]AllTestData = Sheet.retreiveTestData("Divide");
+		//String [][]AllTestData = Sheet.retreiveTestData("Divide");
 		//Sheet.writeTestData("Sheet1","Letter",6, "writing data");
 		//Sheet.writeResults("Sheet1", "Letter", "Emp7", "test suite data");
 		//System.out.println(Rows+" , "+Cols);
 		//System.out.println(Arrays.toString(TestData));
-	  // System.out.println(Arrays.deepToString(AllTestData));
+	  //System.out.println(Arrays.deepToString(AllTestData));
 		//System.out.println(ReqRows);
-	   String Data [][] =Sheet.retrieveTestCaseData("Divide","Data 1 Column","Data 2 Column","CaseToRun","Y");
+	   String Data [][] =Sheet.retrieveTestCaseData("Divide","Data 1 Column","Data 2 Column","CaseToRun","y");
 	   System.out.println(Arrays.deepToString(Data));
+	   
 	}
 }
 
