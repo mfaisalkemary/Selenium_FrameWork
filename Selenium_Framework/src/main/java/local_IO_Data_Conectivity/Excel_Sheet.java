@@ -351,6 +351,8 @@ public Excel_Sheet (String FilePath) throws IOException{
 			//System.out.println("To Run Flag Value Is  "+ToRunFlag);
         if (Row1 == null || !ToRunFlag.equals(ToRunColumnValue) ){
 			Data [i][j-1]= " ";
+			//Data [i][j-1]= Data[i+1][j-1];
+        	//i++;
 		}
         else
         {
@@ -505,8 +507,8 @@ String Data = get_Cell_Data(1,1).toString();
 System.out.println(Data);
 */
 		Excel_Sheet Sheet = new Excel_Sheet("C:\\Data_Test\\framework\\FrameWork.xlsx");
-		int Rows = Sheet.retrieveNumberOfRows("Divide");
-		int Cols =Sheet.retrieveNumberOfColumns("Divide");
+		//int Rows = Sheet.retrieveNumberOfRows("Divide");
+		//int Cols =Sheet.retrieveNumberOfColumns("Divide");
 		//int ReqRows=Sheet.retrieveTestCaseNumberOfDataRows("Sheet1","mohamed");
 		//String Data = Sheet.retriveToRunFlag("Sheet1", "hamada", "9");
 		//String []TestData= Sheet.retrievTestData("Sheet1", "hamada");
