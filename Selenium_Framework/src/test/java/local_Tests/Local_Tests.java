@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -28,15 +29,18 @@ public class Local_Tests {
 	@BeforeClass
 	public void Setup(){
 		
-		/*System.setProperty("webdriver.chrome.driver", "C:\\Eclipse\\Chrome2\\chromedriver_win32\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Eclipse\\Chrome2\\chromedriver_win32\\chromedriver.exe");
 		Drive1 = new ChromeDriver();
-		*/
+		/*
 		System.setProperty("webdriver.gecko.driver", "C:\\Eclipse\\geckodriver\\geckodriver.exe");
 		Drive1 = new FirefoxDriver();
+		*/
+		
+	
 		Cal1 = new Calculator(Drive1);
 		
 		Drive1.manage().window().maximize();
-		Drive1.get("http://calculator-1.com/");
+		Drive1.get("http://web2.0calc.com/");
 		//Drive1.navigate().to("http://calculator-1.com/");
 		System.out.println("Cpmleting setup");
 	}
