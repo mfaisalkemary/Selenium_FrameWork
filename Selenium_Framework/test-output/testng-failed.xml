@@ -7,7 +7,7 @@
         <methods>
           <include name="End"/>
           <include name="Setup"/>
-          <include name="addition"/>
+          <include name="addition" invocation-numbers="2"/>
         </methods>
       </class> <!-- local_Tests.Local_Tests -->
     </classes>

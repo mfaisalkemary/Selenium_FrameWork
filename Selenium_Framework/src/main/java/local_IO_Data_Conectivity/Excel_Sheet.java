@@ -3,7 +3,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+//import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import org.apache.bcel.generic.RETURN;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -11,6 +19,12 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.codoid.products.exception.FilloException;
+import com.codoid.products.fillo.Connection;
+import com.codoid.products.fillo.Fillo;
+import com.codoid.products.fillo.Recordset;
+
 
 public class Excel_Sheet {
  static XSSFWorkbook Wbook;
@@ -292,6 +306,38 @@ public Excel_Sheet (String FilePath) throws IOException{
 
 	}
 	
+	
+	
+	public  int CorrecrRowNum(String SheetName,String ToRunColName,String ToRunValue){
+		int index =Wbook.getSheetIndex(SheetName);
+		if (index==-1){
+			System.out.println("Wrong SheetName");
+			return 0;
+		}
+		Sheet=Wbook.getSheetAt(index);
+		int Rowcount=retrieveNumberOfRows(Sheet.getSheetName());
+		int Colcount=retrieveNumberOfColumns(Sheet.getSheetName());
+		
+		int ColLoc=0;
+		int correctrownum=0;
+		XSSFRow Row1 = Sheet.getRow(0);
+		for (int i=0;i<Colcount;i++){
+			if (Row1.getCell(i).toString().equals(ToRunColName))
+				ColLoc=i;
+		}
+		if (ColLoc ==0){
+			System.out.println("Wrong column name");
+		}
+		for (int j =1;j<Rowcount;j++){
+			XSSFRow Row = Sheet.getRow(j);
+			if (Row.getCell(ColLoc).toString().equals(ToRunValue)){
+				correctrownum++;
+			}
+		}
+		
+		return correctrownum;
+	}
+	
 	/*
 	 * this method is to return test case data from a certain excel sheet 
 	 * based on the test data sheet name , Data columns names  
@@ -336,7 +382,8 @@ public Excel_Sheet (String FilePath) throws IOException{
 		return null;
 	}
 	
-	String [][] Data = new String [Rownum-1][2];
+	int correctrownum=CorrecrRowNum(SheetName,ToRunColumnName,ToRunColumnValue);
+	String [][] Data = new String [correctrownum][2];
 	String ToRunFlag = null;
 	for (int i =0;i<Rownum-1;i++){
 		XSSFRow Row1 = Sheet.getRow(i+1);
@@ -350,9 +397,11 @@ public Excel_Sheet (String FilePath) throws IOException{
 		for (int j =DataCol1loc;j<DataCol2loc+1;j++){
 			//System.out.println("To Run Flag Value Is  "+ToRunFlag);
         if (Row1 == null || !ToRunFlag.equals(ToRunColumnValue) ){
-			Data [i][j-1]= " ";
+			//Data [i][j-1]="";
+        	continue;
 			//Data [i][j-1]= Data[i+1][j-1];
-        	//i++;
+        	//--i;
+        	
 		}
         else
         {
@@ -494,13 +543,97 @@ else{
 	
 	
 	
+	public  static void fillotest() throws FilloException{
+		Fillo filo1 = new Fillo();
+		Connection con = filo1.getConnection("C:\\Data_Test\\framework\\FrameWork.xlsx");
+		String Query ="SELECT ID from Divide ";
+		Recordset RS=con.executeQuery(Query);
+		Recordset RS2=RS.where("CaseToRun = 'y'");
+		
+		int i = RS.getCount();
+		int j = RS.getFieldNames().size();
+		
+		
+		while(RS2.next()){
+			System.out.println(RS2.getField(0));
+			
+		}
+		/*
+		while(RS.next()){
+			//System.out.println(RS.getField("Data1Column")+","+RS.getField("Data2Column")+","+RS.getField("CaseToRun"));
+			for (int t =0;t<Cols.length;t++){
+			System.out.println(RS.getField(Cols[t]));
+			}
+			
+		}*/
+		
+		
+		
+		
+		/*for(int z=0;z<i;z++){
+			for (int t =0;t<Cols.length;t++){
+			data[z][t]=RS.getField(Cols[t]).valueOf(z);
+				
+			}
+		}*/
+		
+		RS.close();
+		con.close();
+		//return data;
+	}
 	
 	
+	public static void fillo(String [] Cols) throws FilloException{
+		Fillo filo1 = new Fillo();
+		Connection con = filo1.getConnection("C:\\Data_Test\\framework\\FrameWork.xlsx");
+		String colnames = "";
+		for (int j =0;j<Cols.length;j++){
+		colnames=colnames + Cols[j]+",";
+		String sqlValidString = colnames.substring(0,colnames.lastIndexOf(","));
+		String Query ="SELECT " + sqlValidString +" from Divide where CaseToRun='y' ";
+		Recordset RS = con.executeQuery(Query);
+		System.out.println(RS.getCount());
+		System.out.println(RS.getFieldNames().size());
+		}
+		
+		
+			
+		/*String Query ="SELECT * from Divide  where ID = 1 ";
+		Recordset RS = con.executeQuery(Query);
+		colnames=colnames + Cols[j]+",";
+				String sqlValidString = colnames.substring(0,colnames.lastIndexOf(","));
+				String Query ="SELECT " + sqlValidString +" from Divide where CaseToRun='y' ";
+		while(RS.next()){
+			System.out.println(RS.getField(1).value());
+			}*/
+		
+
+			
+			//System.out.println(Arrays.deepToString(data));
+		}
+			
+		
 	
+	
+	/*
+	public static void Excel_DB() throws ClassNotFoundException, SQLException{
+		Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+		//Connection conn = DriverManager.getConnection("C:\\Data_Test\\framework\\FrameWork.xlsx");
+		Connection conn = DriverManager.getConnection("jdbc:ucanaccess://"+"C:\\Data_Test\\framework\\FrameWork.xlsx");
+		String Query = "select Data1Column,Data2Column from Divide where CaseToRun = 'y'";
+		 Statement st = conn.createStatement();
+		 ResultSet rs = st.executeQuery(Query);
+		 while(rs.next()){
+				System.out.println(rs.getString(1));
+				
+			}
+		 
+	}
+	*/
 	
 	
 	// this method is to test the written code
-	public static void main(String[]args) throws IOException{
+	public static void main(String[]args) throws IOException, FilloException, ClassNotFoundException, SQLException{
 /*set_Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx", "Sheet1");
 Set_Cell_Data(1,1,"Data Test120","C:\\Data_Test\\Excel_test.xlsx");
 String Data = get_Cell_Data(1,1).toString();
@@ -519,8 +652,15 @@ System.out.println(Data);
 		//System.out.println(Arrays.toString(TestData));
 	  //System.out.println(Arrays.deepToString(AllTestData));
 		//System.out.println(ReqRows);
-	   String Data [][] =Sheet.retrieveTestCaseData("Divide","Data 1 Column","Data 2 Column","CaseToRun","y");
-	   System.out.println(Arrays.deepToString(Data));
+	String Data [][] =Sheet.retrieveTestCaseData("Divide","Data1Column","Data2Column","CaseToRun","y");
+	  System.out.println(Arrays.deepToString(Data));
+	 // int x= Sheet.CorrecrRowNum("Divide" ,"CaseToRun","y");
+	  
+		//String[]cols=new String[] {"Data1Column","Data2Column"};
+		//fillotest();
+		//String Data [][] = fillotest(cols);
+		//System.out.println(Arrays.deepToString(Data));
+		//fillo(cols);
 	   
 	}
 }

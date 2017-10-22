@@ -1,6 +1,7 @@
 package tests_To_Be_Executed;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import java.net.MalformedURLException;
@@ -52,7 +53,7 @@ public class Tests {
     
     //Wait.until(ExpectedConditions.visibilityOf(element))
 	}
-	
+	@DataProvider
 	@Test
 	public void Addition(){
 		Driver.manage().window().maximize();

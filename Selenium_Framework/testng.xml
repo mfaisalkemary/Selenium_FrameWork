@@ -3,7 +3,8 @@
 <suite name="Suite">
   <test name="Test">
     <classes>
-      <class name=".Tests"/>
+      <class name="local_Tests.Local_Tests"/>
+      <class name="tests_To_Be_Executed.Tests"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
