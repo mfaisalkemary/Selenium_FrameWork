@@ -22,20 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Eclipse/saxon9.jar/saxon9.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/poi-3.15.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/poi-examples-3.15.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/poi-excelant-3.15.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/poi-ooxml-3.15.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/poi-ooxml-schemas-3.15.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/poi-scratchpad-3.15.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/lib/commons-collections4-4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/ooxml-lib/curvesapi-1.04.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/poi-bin-3.15-20160924/poi-3.15/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -46,8 +32,20 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Eclipse/saxon9-jdom.jar/saxon9-jdom.jar"/>
-	<classpathentry kind="lib" path="C:/Eclipse/saxon9-dom.jar/saxon9-dom.jar"/>
+	<classpathentry kind="lib" path="E:/MyEclipse/SAXON/saxon8-jdom.jar"/>
+	<classpathentry kind="lib" path="E:/MyEclipse/SAXON/saxon9.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/poi-3.14-beta1-20151223.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/poi-examples-3.14-beta1-20151223.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/poi-excelant-3.14-beta1-20151223.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/poi-ooxml-3.14-beta1-20151223.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/poi-ooxml-schemas-3.14-beta1-20151223.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/poi-scratchpad-3.14-beta1-20151223.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="E:/Eclipse2/eclipse-jee-juno-win32-x86_64/eclipse-jee-juno-win32-x86_64/poi-bin-3.14-beta1-20151223/poi-3.14-beta1/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/malkamary/Downloads/ojdbc-10.2.0.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/malkamary/Desktop/jdbc.jar/jdbc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Mine/Downloads/ojdbc-10.2.0.4.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

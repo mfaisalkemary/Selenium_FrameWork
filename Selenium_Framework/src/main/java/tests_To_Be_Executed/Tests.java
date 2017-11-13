@@ -1,6 +1,7 @@
 package tests_To_Be_Executed;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import java.net.MalformedURLException;
@@ -11,7 +12,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -53,7 +53,7 @@ public class Tests {
     
     //Wait.until(ExpectedConditions.visibilityOf(element))
 	}
-	
+	@DataProvider
 	@Test
 	public void Addition(){
 		Driver.manage().window().maximize();
@@ -68,7 +68,7 @@ public class Tests {
 		Assert.assertEquals(calculator.multiply(11, 12), 132);
 	}
 	
-	@AfterMethod
+	@AfterTest
 	public void end(){
 		Driver.quit();
 	}
