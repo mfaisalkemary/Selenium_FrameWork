@@ -11,6 +11,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -67,7 +68,7 @@ public class Tests {
 		Assert.assertEquals(calculator.multiply(11, 12), 132);
 	}
 	
-	@AfterTest
+	@AfterMethod
 	public void end(){
 		Driver.quit();
 	}
