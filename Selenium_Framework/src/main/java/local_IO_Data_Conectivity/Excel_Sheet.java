@@ -3,6 +3,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
+//import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.apache.bcel.generic.RETURN;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -11,6 +18,11 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.codoid.products.exception.FilloException;
+import com.codoid.products.fillo.Connection;
+import com.codoid.products.fillo.Fillo;
+import com.codoid.products.fillo.Recordset;
 
 public class Excel_Sheet {
  static XSSFWorkbook Wbook;
@@ -145,9 +157,6 @@ public Excel_Sheet (String FilePath) throws IOException{
 		
 		
 	
-	
-    
-    
 	/*this method is to return cell data from the excel sheet based on the 
 	provided column , row numbers */ 
 	public static  Object get_Cell_Data (int col_num,int row_num){
@@ -169,7 +178,7 @@ public Excel_Sheet (String FilePath) throws IOException{
 	/*
 	 * this method is to retrieve the number of data rows will be used for a certain test case
 	 */
-	public  int retrieveTestCaseNumberOfDataRows (String SheetName,String PartialCaseName){
+	public  int retrieveTestCaseNumberOfDataRows (String SheetName,String PartialCaseName,int colloc){
 		int Index = Wbook.getSheetIndex(SheetName);
 		if (Index == -1){
      System.out.println("Wrong Sheet Name");
@@ -183,10 +192,9 @@ public Excel_Sheet (String FilePath) throws IOException{
 			int RowNum= retrieveNumberOfRows(SheetName);
 			for(int I=1;I<RowNum;I++){
 				Row = ReqSheet.getRow(I);
-				Cell=Row.getCell(1);
+				Cell=Row.getCell(colloc);
 				if (Cell.toString().contains(PartialCaseName)){
 					ReqRowNum++;
-					
 				}	
 				
 				}
@@ -199,6 +207,68 @@ public Excel_Sheet (String FilePath) throws IOException{
 		}
 		
 	}
+	
+	
+	/*
+	 * this method is to return the test data row IDs based on the 
+	 * execution flag
+	 */
+	public ArrayList<Integer> Rowlocation(String sheetname,String idcolname,String toruncolname, String toruncolvalue){
+		int index = Wbook.getSheetIndex(sheetname);
+		if (index ==-1){
+			System.out.println("Wrong Sheet name");
+			return null;
+		}
+		else {
+			XSSFSheet reqsheet= Wbook.getSheetAt(index);
+			int rows = retrieveNumberOfRows(sheetname);
+			int cols = retrieveNumberOfColumns(sheetname);
+			int idcolloc =-1;
+			int toruncolloc =-1;
+			
+			XSSFRow Row0 = reqsheet.getRow(0);
+			
+			for (int i =0;i<cols;i++){
+				if (Row0.getCell(i).toString().equals(idcolname)){
+					idcolloc =i;
+				}
+				
+				if (Row0.getCell(i).toString().equals(toruncolname)){
+					toruncolloc =i;
+				}
+			}
+				if (idcolloc==-1){
+					System.out.println("Wrong  ID column name");
+					return null;
+				}
+			    if (toruncolloc == -1 ){
+						System.out.println("Wrong  torun column name");
+						return null;
+					}
+				ArrayList<Integer> IDs = new ArrayList<Integer>();
+				for (int x=1;x<rows;x++){
+				XSSFCell flag = reqsheet.getRow(x).getCell(toruncolloc);
+				XSSFCell ID = reqsheet.getRow(x).getCell(idcolloc);
+				if (flag.toString().equals(toruncolvalue)){
+					
+				         IDs.add(Integer.parseInt(ID.getRawValue()));
+				}
+					
+				}
+				
+				
+				return IDs;
+		}
+		
+				
+		}
+		 
+	
+    
+    
+	
+	
+	
 	
 	/*
 	 * this method is to return row numbers of test data related to a certain test case  
@@ -327,9 +397,9 @@ public Excel_Sheet (String FilePath) throws IOException{
 		}
 	}
 	
-	System.out.println("DataCol1loc is : "+DataCol1loc+"     "+"DataCol2loc is : "+DataCol2loc);
+	//System.out.println("DataCol1loc is : "+DataCol1loc+"     "+"DataCol2loc is : "+DataCol2loc);
 	
-	System.out.println("Rownum is : "+Rownum+"     "+"Colnum is : "+Colnum);
+//	System.out.println("Rownum is : "+Rownum+"     "+"Colnum is : "+Colnum);
 	
 	if (DataCol1loc== -1 || DataCol2loc == -1 ||ToRunColloc ==-1 ){
 		System.out.println("Wrong Column Names");
@@ -494,13 +564,51 @@ else{
 	
 	
 	
+	/*
+	public static void DB() throws ClassNotFoundException, SQLException{
+		Class.forName("oracle.jdbc.driver.OracleDriver"); 
+		Connection c = java.sql.DriverManager.getConnection( "jdbc:odbc:Driver={Microsoft Excel Driver (*.xls)};DBQ=C:\\Data_Test\\framework\\FrameWork.xls");
+		String Qeery="select * from Divide";
+		Statement Stmt = c.createStatement();
+		ResultSet RS = Stmt.executeQuery(Qeery);
+		while(RS.next()){
+			RS.getString(0);
+		}
+		
+	}*/
 	
+	public  String[][] fillo() throws FilloException{
+		Fillo fillo=new Fillo();
+		Connection connection=fillo.getConnection("C:\\Data_Test\\framework\\FrameWork.xlsx");
+		ArrayList<Integer> Ids= Rowlocation("Divide","ID","CaseToRun","y");
+		String [][] Data = new String [Ids.size()][2];
+		for (int i=0;i<Ids.size();i++){
+			int y=Ids.get(i);
+			String Query ="Select Data1Column , Data2Column from Divide where ID="+y;
+			Recordset recordset=connection.executeQuery(Query);	
+			while (recordset.next()){
+		for (int x=0;x<2;x++){
+			Data[i][x]=recordset.getField(x).value();
+			
+		}
+			}
+		//recordset.close();
+		//connection.close();
+		}
+		//recordset.close();
+		return Data;
+		
+		//recordset.close();
+		
+	}
+	
+
 	
 	
 	
 	
 	// this method is to test the written code
-	public static void main(String[]args) throws IOException{
+	public static void main(String[]args) throws IOException, ClassNotFoundException, SQLException, FilloException{
 /*set_Excel_Sheet("C:\\Data_Test\\Excel_test.xlsx", "Sheet1");
 Set_Cell_Data(1,1,"Data Test120","C:\\Data_Test\\Excel_test.xlsx");
 String Data = get_Cell_Data(1,1).toString();
@@ -519,9 +627,16 @@ System.out.println(Data);
 		//System.out.println(Arrays.toString(TestData));
 	  //System.out.println(Arrays.deepToString(AllTestData));
 		//System.out.println(ReqRows);
-	   String Data [][] =Sheet.retrieveTestCaseData("Divide","Data 1 Column","Data 2 Column","CaseToRun","y");
-	   System.out.println(Arrays.deepToString(Data));
-	   
+	 //  String Data [][] =Sheet.retrieveTestCaseData("Divide","Data1Column","Data2Column","CaseToRun","y");
+	   // System.out.println(Arrays.deepToString(Data));
+		//DB();
+	  //fillo();
+		/*ArrayList<Integer> Ids= Sheet.Rowlocation("Divide","ID","CaseToRun","y");
+		for (int i=0;i<Ids.size();i++){
+	  System.out.println(Ids.get(i));
+		}*/
+		String[][] Data=Sheet.fillo();
+		System.out.println(Arrays.deepToString(Data));
 	}
 }
 
