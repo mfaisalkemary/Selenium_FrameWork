@@ -19,58 +19,58 @@ public Calculator(WebDriver driver){
 }
 
 
-@FindBy(id="nmr_25")
+@FindBy(id="Btn0")
 public WebElement Number0;
 
-@FindBy(id="nmr_19")
+@FindBy(id="Btn1")
 public WebElement Number1;
 
-@FindBy(id="nmr_20")
+@FindBy(id="Btn2")
 public WebElement Number2;
 
-@FindBy(id="nmr_21")
+@FindBy(id="Btn3")
 public WebElement Number3;
 
-@FindBy(id="nmr_13")
+@FindBy(id="Btn4")
 public WebElement Number4;
 
-@FindBy(id="nmr_14")
+@FindBy(id="Btn5")
 public WebElement Number5;
 
-@FindBy(id="nmr_15")
+@FindBy(id="Btn6")
 public WebElement Number6;
 
-@FindBy(id="nmr_7")
+@FindBy(id="Btn7")
 public WebElement Number7;
 
-@FindBy(id="nmr_8")
+@FindBy(id="Btn8")
 public WebElement Number8;
 
-@FindBy(id="nmr_9")
+@FindBy(id="Btn9")
 public WebElement Number9;
 
-@FindBy(id="nmr_24")
+@FindBy(id="BtnClear")
 public WebElement Cancel;
 
-@FindBy(id="display")
+@FindBy(id="input")
 public WebElement Result;
 
-@FindBy(id="nmr_22")
+@FindBy(id="BtnPlus")
 public WebElement Sumation;
 
-@FindBy(id="nmr_17")
+@FindBy(id="BtnMinus")
 public WebElement Minus;
 
-@FindBy(id="nmr_16")
+@FindBy(id="BtnMult")
 public WebElement Multiply;
 
-@FindBy(id="nmr_10")
+@FindBy(id="BtnDiv")
 public WebElement Divide;
 
-@FindBy(id="nmr_23")
+@FindBy(id="BtnCalc")
 public WebElement Equal;
 
-@FindBy(css = "#u_0_0 > tbody > tr:nth-child(1) > td > table")
+@FindBy(xpath = "//*[@id='calccontainer']/div[2]")
 public WebElement pageidentifier;
 
 
